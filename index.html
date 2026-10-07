@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>テリにゃん</title>
+  <meta name="theme-color" content="#EFE8DC" />
+  <meta name="description" content="色のなわばりに猫を一匹ずつ置くロジックパズル" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #efe8dc;
+      --card: #fff9f0;
+      --fg: #1a1815;
+      --muted: #6f655c;
+      --subtle: #94897e;
+      --ink: #1a1815;
+      --border: #d4cbbd;
+      --accent: #4f6f5c;
+      --accent-fg: #f4f1ea;
+      --clay: #b4452c;
+      --r: 12px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100dvh; background: var(--paper); color: var(--fg);
+      font-family: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif; -webkit-font-smoothing: antialiased; }
+    button { font: inherit; cursor: pointer; }
+    button:disabled { cursor: default; opacity: 0.4; }
+    h1, h2 { font-family: "Shippori Mincho", serif; font-weight: 500; text-wrap: balance; margin: 0; }
+    .shell { max-width: 32rem; margin: 0 auto; min-height: 100dvh; padding: 1rem 1.1rem max(1.5rem, env(safe-area-inset-bottom)); display: flex; flex-direction: column; }
+    .row { display: flex; align-items: center; gap: .5rem; }
+    .grow { flex: 1; min-width: 0; }
+    .muted { color: var(--muted); }
+    .subtle { color: var(--subtle); font-size: .8rem; }
+    .btn { height: 2.75rem; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--fg); padding: 0 1rem; font-weight: 500; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; }
+    .btn:active:not(:disabled) { transform: scale(.97); }
+    .btn-primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); height: 3.25rem; width: 100%; border-radius: 14px; font-size: 1.05rem; }
+    .btn-ink { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .btn-ghost { background: transparent; border-color: transparent; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+    .hero { display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid var(--ink); border-radius: 16px; overflow: hidden; margin: 1.6rem 0 1.8rem; }
+    .hero > div { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+    .board { width: 100%; aspect-ratio: 1; display: grid; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; background: var(--ink); }
+    .cell { position: relative; display: flex; align-items: center; justify-content: center; border: 0; padding: 0; min-width: 0; }
+    .cell svg { width: 58%; height: 58%; }
+    .cell.mark svg { width: 42%; height: 42%; opacity: .55; }
+    .overlay { position: fixed; inset: 0; background: rgb(26 24 21 / .35); display: flex; align-items: end; justify-content: center; padding: 1rem; z-index: 20; }
+    @media (min-width: 520px) { .overlay { align-items: center; } }
+    .panel { width: 100%; max-width: 22rem; background: var(--paper); border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem; }
+    .hearts { display: flex; gap: 2px; }
+    .levels { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; }
+    .lvl { aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--border); background: var(--card); font-variant-numeric: tabular-nums; font-size: .85rem; }
+    .lvl.done { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+    .lvl.lock { background: #e4dcd0; color: var(--subtle); border-color: transparent; }
+    .icon-btn { width: 2.75rem; height: 2.75rem; display: inline-flex; align-items: center; justify-content: center; border: 0; background: transparent; border-radius: 10px; color: var(--muted); }
+    .rule { display: flex; gap: 1rem; border-top: 1px solid var(--border); padding-top: 1.1rem; margin-top: 1.1rem; }
+    .shake { animation: shake .32s ease; }
+    @keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+    .r0 { background: #e3c4b4; } .r1 { background: #b9cbb4; } .r2 { background: #b5c8d8; }
+    .r3 { background: #e2d3a4; } .r4 { background: #c3c0cf; } .r5 { background: #d9c2a0; }
+    .r6 { background: #aec9c2; } .r7 { background: #d7a898; } .r8 { background: #cfc8b8; } .r9 { background: #9fb59c; }
+    @media (prefers-reduced-motion: reduce) { .shake { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="app" class="shell"></div>
+  <script src="./game.js"></script>
+</body>
+</html>
